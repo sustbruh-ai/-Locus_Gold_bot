@@ -2,90 +2,101 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<title>LocusGold Cases</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Locus Gold</title>
 
 <script src="https://js.onclckvd.com/in-stream-ad-admanager/tma.js"></script>
 
 <style>
 
 body{
-background:#0f1117;
+margin:0;
 font-family:Arial;
+background:#000;
 color:white;
-text-align:center;
-margin:0;
 }
 
-header{
-background:#171a23;
+.top{
+display:flex;
+justify-content:space-between;
 padding:20px;
-font-size:28px;
-font-weight:bold;
-color:#f5b642;
-}
-
-.balance{
-margin-top:20px;
-font-size:22px;
-}
-
-.cases{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:20px;
-padding:30px;
-max-width:600px;
-margin:auto;
-}
-
-.case{
-background:#1c2130;
-padding:25px;
-border-radius:15px;
-box-shadow:0 0 10px rgba(0,0,0,0.4);
-transition:0.2s;
-}
-
-.case:hover{
-transform:scale(1.05);
-}
-
-.case h3{
-margin:0;
-color:#f5b642;
-}
-
-.case p{
-font-size:14px;
-opacity:0.8;
-}
-
-button{
-margin-top:10px;
-padding:10px 20px;
-border:none;
-border-radius:10px;
-background:#f5b642;
-color:black;
-font-weight:bold;
-cursor:pointer;
-}
-
-button:hover{
-background:#ffd369;
-}
-
-.result{
-margin-top:20px;
 font-size:20px;
 }
 
-.loading{
-margin-top:10px;
-font-size:14px;
-opacity:0.7;
+.balance{
+font-size:32px;
+font-weight:bold;
+}
+
+.screen{
+display:none;
+padding:20px;
+}
+
+.active{
+display:block;
+}
+
+.card{
+background:#111;
+border-radius:20px;
+padding:20px;
+margin-bottom:20px;
+}
+
+.case{
+border:2px solid #333;
+border-radius:20px;
+padding:20px;
+margin-bottom:15px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.btn{
+background:#ff2a2a;
+border:none;
+padding:12px 25px;
+border-radius:20px;
+color:white;
+font-weight:bold;
+}
+
+.bottom{
+position:fixed;
+bottom:0;
+width:100%;
+background:#111;
+display:flex;
+justify-content:space-around;
+padding:15px;
+}
+
+.tab{
+color:#aaa;
+}
+
+.tab.active{
+color:#ff2a2a;
+}
+
+input{
+width:100%;
+padding:15px;
+margin:10px 0;
+border-radius:10px;
+border:none;
+background:#222;
+color:white;
+}
+
+.exchange{
+background:#111;
+padding:20px;
+border-radius:20px;
+text-align:center;
 }
 
 </style>
@@ -93,141 +104,220 @@ opacity:0.7;
 
 <body>
 
-<header>
-🎰 LocusGold Cases
-</header>
+<div class="top">
+<div>
 
-<div class="balance">
-BC: <span id="balance">0</span>
+<div>Вирты</div>
+<div class="balance" id="money">0 ₽</div>
+
 </div>
 
-<div class="cases">
+<div>
+
+<div>BLACK COINS</div>
+<div class="balance" id="bc">0</div>
+
+</div>
+</div>
+
+<!-- ИГРА -->
+
+<div id="game" class="screen active">
+
+<div class="exchange">
+
+<h2>BR</h2>
+
+<p>ОБМЕН 1.000.000 ₽ НА 1 BC</p>
+
+<input id="exchangeInput" placeholder="Сумма ₽">
+
+<button class="btn" onclick="exchange()">ОБМЕН</button>
+
+</div>
+
+</div>
+
+<!-- КЕЙСЫ -->
+
+<div id="cases" class="screen">
 
 <div class="case">
-<h3>Кейс 1</h3>
-<p>Награда: 1-10 BC</p>
-<p>Цена: 1 реклама</p>
-<button onclick="openCase(1)">Открыть</button>
+
+<div>
+Кейс Бомж<br>
+Награда: 1-10 ₽
+</div>
+
+<button class="btn" onclick="openCase(1)">Открыть</button>
+
 </div>
 
 <div class="case">
-<h3>Кейс 2</h3>
-<p>Награда: 10-25 BC</p>
-<p>Цена: 3 рекламы</p>
-<button onclick="openCase(2)">Открыть</button>
+
+<div>
+Кейс Перекуп<br>
+Награда: 10-25 ₽
+</div>
+
+<button class="btn" onclick="openCase(2)">3 рекламы</button>
+
 </div>
 
 <div class="case">
-<h3>Кейс 3</h3>
-<p>Награда: 25-50 BC</p>
-<p>Цена: 4 рекламы</p>
-<button onclick="openCase(3)">Открыть</button>
+
+<div>
+Кейс Бизнес<br>
+Награда: 25-50 ₽
+</div>
+
+<button class="btn" onclick="openCase(3)">4 рекламы</button>
+
 </div>
 
 <div class="case">
-<h3>Кейс 4</h3>
-<p>Награда: 50-150 BC</p>
-<p>Цена: 5 реклам</p>
-<button onclick="openCase(4)">Открыть</button>
+
+<div>
+Кейс Магнат<br>
+Награда: 50-150 ₽
+</div>
+
+<button class="btn" onclick="openCase(4)">5 реклам</button>
+
 </div>
 
 </div>
 
-<div class="loading" id="status"></div>
+<!-- СТАТА -->
 
-<div class="result" id="result"></div>
+<div id="stats" class="screen">
+
+<div class="card">
+
+Всего кейсов<br>
+<b id="totalCases">0</b>
+
+</div>
+
+<div class="card">
+
+На обмене<br>
+<b id="totalBC">0 BC</b>
+
+</div>
+
+</div>
+
+<!-- ВЫВОД -->
+
+<div id="withdraw" class="screen">
+
+<div class="card">
+
+<input placeholder="Nick_Name">
+<input placeholder="Сервер">
+<input placeholder="Сумма (от 500 BC)">
+
+<button class="btn">ВЫВЕСТИ</button>
+
+</div>
+
+</div>
+
+<!-- НИЖНЕЕ МЕНЮ -->
+
+<div class="bottom">
+
+<div class="tab active" onclick="openTab('game',this)">⚡</div>
+<div class="tab" onclick="openTab('cases',this)">📦</div>
+<div class="tab" onclick="openTab('stats',this)">📊</div>
+<div class="tab" onclick="openTab('withdraw',this)">💸</div>
+
+</div>
 
 <script>
 
-let BC = 0
-let showAd
+let money=0
+let bc=0
+let cases=0
 
-// запуск рекламы
-window.initCdTma?.({ id: '429797' })
-.then(show=>{
-showAd = show
-})
-.catch(e=>console.log(e))
+window.initCdTma?.({ id: 'Your Spot ID' })
+.then(show => window.show = show)
 
-function updateBalance(){
-document.getElementById("balance").innerText = BC
+function ad(){
+return window.show?.()
 }
 
-// случайное число
-function random(min,max){
+function rand(min,max){
 return Math.floor(Math.random()*(max-min+1))+min
 }
 
-// воспроизведение нескольких реклам
-async function playAds(amount){
+async function openCase(type){
 
-for(let i=1;i<=amount;i++){
+let ads=1
+let min=1
+let max=10
 
-document.getElementById("status").innerText =
-"📺 Реклама "+i+" / "+amount
+if(type==2){ads=3;min=10;max=25}
+if(type==3){ads=4;min=25;max=50}
+if(type==4){ads=5;min=50;max=150}
 
-try{
-await showAd()
-}catch(e){
-console.log(e)
-return false
+for(let i=0;i<ads;i++){
+await ad()
 }
 
+let reward=rand(min,max)
+
+money+=reward
+cases++
+
+update()
+
+alert("Ты выиграл "+reward+" ₽")
+
 }
 
-document.getElementById("status").innerText=""
-return true
+function exchange(){
+
+let val=parseInt(exchangeInput.value)
+
+if(val>=1000000){
+
+let give=Math.floor(val/1000000)
+
+bc+=give
+money-=give*1000000
 
 }
 
-// открыть кейс
-async function openCase(caseId){
+update()
 
-if(!showAd){
-alert("Реклама ещё загружается")
-return
 }
 
-let ads = 0
-let min = 0
-let max = 0
+function update(){
 
-if(caseId==1){
-ads = 1
-min = 1
-max = 10
+moneyEl.innerText=money+" ₽"
+bcEl.innerText=bc
+totalCases.innerText=cases
+totalBC.innerText=bc+" BC"
+
 }
 
-if(caseId==2){
-ads = 3
-min = 10
-max = 25
-}
+const moneyEl=document.getElementById("money")
+const bcEl=document.getElementById("bc")
 
-if(caseId==3){
-ads = 4
-min = 25
-max = 50
-}
+function openTab(id,el){
 
-if(caseId==4){
-ads = 5
-min = 50
-max = 150
-}
+document.querySelectorAll(".screen")
+.forEach(x=>x.classList.remove("active"))
 
-let watched = await playAds(ads)
+document.getElementById(id)
+.classList.add("active")
 
-if(!watched) return
+document.querySelectorAll(".tab")
+.forEach(x=>x.classList.remove("active"))
 
-let reward = random(min,max)
-
-BC += reward
-
-updateBalance()
-
-document.getElementById("result").innerText =
-"🎉 Ты выиграл "+reward+" BC!"
+el.classList.add("active")
 
 }
 
