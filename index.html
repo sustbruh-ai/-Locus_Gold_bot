@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Locus Gold</title>
+
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+<style>
+
+body{
+background:black;
+color:white;
+font-family:Arial;
+text-align:center;
+}
+
+.top{
+margin-top:20px;
+font-size:22px;
+}
+
+.balance{
+font-size:40px;
+margin:20px;
+}
+
+.button{
+background:red;
+color:white;
+padding:15px;
+border-radius:10px;
+margin:10px;
+display:inline-block;
+}
+
+.tab{
+display:none;
+}
+
+.menu{
+position:fixed;
+bottom:0;
+width:100%;
+background:#111;
+padding:10px;
+}
+
+.menu button{
+background:none;
+color:white;
+border:none;
+margin:10px;
+font-size:18px;
+}
+
+</style>
+</head>
+
+<body>
+
+<h2>Locus Gold</h2>
+
+<div class="top">
+Вирты: <span id="money">0</span> ₽
+<br>
+Black Coins: <span id="bc">0</span>
+</div>
+
+<div id="game" class="tab">
+
+<div class="balance">
+<button class="button" onclick="farm()">Клик +10</button>
+</div>
+
+<div>
+1 000 000 ₽ = 1 BC
+<br>
+<button class="button" onclick="exchange()">Обменять</button>
+</div>
+
+</div>
+
+<div id="cases" class="tab">
+
+<h3>Кейс Бомж</h3>
+<button class="button" onclick="openCase()">Открыть</button>
+
+</div>
+
+<div id="stats" class="tab">
+
+<h3>Статистика</h3>
+
+Всего кейсов: <span id="casesCount">0</span>
+
+</div>
+
+<div id="withdraw" class="tab">
+
+<h3>Вывод BC</h3>
+
+<input placeholder="NickName" id="nick"><br><br>
+<input placeholder="Server" id="server"><br><br>
+<input placeholder="Amount BC" id="amount"><br><br>
+
+<button class="button" onclick="withdraw()">Вывести</button>
+
+</div>
+
+<div class="menu">
+
+<button onclick="openTab('game')">Игра</button>
+<button onclick="openTab('cases')">Кейсы</button>
+<button onclick="openTab('stats')">Стата</button>
+<button onclick="openTab('withdraw')">Вывод</button>
+
+</div>
+
+<script>
+
+let money = 0
+let bc = 0
+let cases = 0
+
+function farm(){
+
+money += 10
+update()
+
+}
+
+function exchange(){
+
+if(money >= 1000000){
+
+money -= 1000000
+bc += 1
+
+update()
+
+}else{
+
+alert("Нужно 1 000 000")
+
+}
+
+}
+
+function openCase(){
+
+cases++
+
+let reward = Math.floor(Math.random()*5)+1
+
+bc += reward
+
+update()
+
+}
+
+function withdraw(){
+
+let nick = document.getElementById("nick").value
+let server = document.getElementById("server").value
+let amount = document.getElementById("amount").value
+
+alert("Заявка отправлена")
+
+}
+
+function update(){
+
+document.getElementById("money").innerText = money
+document.getElementById("bc").innerText = bc
+document.getElementById("casesCount").innerText = cases
+
+}
+
+function openTab(tab){
+
+document.querySelectorAll(".tab").forEach(t=>t.style.display="none")
+
+document.getElementById(tab).style.display="block"
+
+}
+
+openTab("game")
+
+</script>
+
+</body>
+</html>
